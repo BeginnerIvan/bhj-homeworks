@@ -21,21 +21,19 @@ class Game {
   }
 
   registerEvents() {
-    document.addEventListener('keyup', (event) => {
-      if (!this.currentSymbol) return;
-
-      const expected = this.currentSymbol.textContent;
-      const keyCode = event.keyCode || event.which;
-      const pressed = String.fromCharCode(keyCode);
-      if (pressed.length !== 1) return;
-
-      if (expected.toLowerCase() === pressed.toLowerCase()) {
-        this.success();
-      } else {
-        this.fail();
-      }
-    });
-  }
+  document.addEventListener('keyup', (event) => {
+    if (!this.currentSymbol) return;
+    const expected = this.currentSymbol.textContent;
+    let pressed = event.key;
+    if (pressed.length !== 1) return;
+    if (!/^[a-zA-Z]$/.test(pressed)) return;
+    if (expected.toLowerCase() === pressed.toLowerCase()) {
+      this.success();
+    } else {
+      this.fail();
+    }
+  });
+}
 
   success() {
     if (this.currentSymbol.classList.contains("symbol_current"))
